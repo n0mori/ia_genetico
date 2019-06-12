@@ -8,4 +8,4 @@ def read_dataset(filename):
             dataset.append(row)
 
     #retornando o dataset limpo e o volume da mochila
-    return dataset[2:], dataset[1][1]
+    return dataset[2:], int(dataset[1][1])
