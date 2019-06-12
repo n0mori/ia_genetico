@@ -1,5 +1,4 @@
 import random
-import reader
 
 # Os vetores serão representados por uma lista cujos elementos serão a ordem
 # em que serão colocados na mochila.
