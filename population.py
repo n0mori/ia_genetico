@@ -25,3 +25,7 @@ def apply_fitness(pop, dataset, cap):
         fits.append(fitness(gene, dataset, cap))
     return fits
 
+def mutate(pop, rate):
+    for gene in pop:
+        if random.random() > rate:
+            random.shuffle(gene)
