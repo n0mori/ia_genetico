@@ -9,7 +9,7 @@ def gen_population(item_count, pop_size=20):
         pop.append(random.sample(range(50), 50))
     return pop
 
-def fitness(gene, dataset, cap):
+def calculate_fitness(gene, dataset, cap):
     fit = 0;
     for item, _ in sorted(enumerate(gene), key=lambda tpl: tpl[1]):
         weight = int(dataset[item][1])
@@ -19,10 +19,10 @@ def fitness(gene, dataset, cap):
             fit += imp
     return fit
 
-def apply_fitness(pop, dataset, cap):
+def fitness(pop, dataset, cap):
     fits = []
     for gene in pop:
-        fits.append(fitness(gene, dataset, cap))
+        fits.append(calculate_fitness(gene, dataset, cap))
     return fits
 
 def mutate(pop, rate):
@@ -85,6 +85,5 @@ def cross_pop(parents):
     
     for cross in zip(moms, dads):
         new_pop += crossover(cross[0], cross[1])
-        
-    print(new_pop)
+    
     return new_pop
