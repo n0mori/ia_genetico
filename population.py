@@ -29,3 +29,54 @@ def mutate(pop, rate):
     for gene in pop:
         if random.random() > rate:
             random.shuffle(gene)
+
+'''
+ Notes about how the crossing works
+ 1 5 3 2 6 4 7 8
+ 4 6 2 8 5 3 1 7
+ 
+ 6 4 7 8
+ 2 1 8 4
+ 
+ (2,6) (1,4) (8,7) (4,8)
+ (1,4) (2,6) (4,8) (8,7)
+ 4 6 8 7
+ 
+ 5 3 1 7
+ 2 3 1 7
+ (2,5) (3,3) (1,1) (7,7)
+ (1,1) (2,5) (3,3) (7,7)
+
+ 1 5 3 7
+
+ 1 5 3 2 4 6 7 8
+ 4 6 2 8 1 5 3 7
+ 
+'''
+
+# do not pass fitness
+def crossover(mom, dad):
+    head_mom = mom[:int(len(mom) / 2)]
+    tail_mom = mom[int(len(mom) / 2):]
+    
+    head_dad = dad[:int(len(dad) / 2)]
+    tail_dad = dad[int(len(dad) / 2):]
+    
+    order_mom = [dad.index(x) for x in tail_mom]
+    order_dad = [mom.index(x) for x in tail_dad]
+    
+    _, half_heir1 = zip(*sorted(zip(order_mom, second_half_mom)))
+    _, half_heir2 = zip(*sorted(zip(order_dad, second_half_dad)))
+    
+    half_heir1 = [x for x in half_heir1]
+    half_heir2 = [x for x in half_heir2]
+    
+    heir1 = head_mom + half_heir1
+    heir2 = head_dad + half_heir2
+    
+    return heir1, heir2    
+
+# do not pass fitness
+def cross_pop(parents, pop_size):
+    new_pop = parents
+    
