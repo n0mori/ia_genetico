@@ -65,8 +65,8 @@ def crossover(mom, dad):
     order_mom = [dad.index(x) for x in tail_mom]
     order_dad = [mom.index(x) for x in tail_dad]
     
-    _, half_heir1 = zip(*sorted(zip(order_mom, second_half_mom)))
-    _, half_heir2 = zip(*sorted(zip(order_dad, second_half_dad)))
+    _, half_heir1 = zip(*sorted(zip(order_mom, tail_mom)))
+    _, half_heir2 = zip(*sorted(zip(order_dad, tail_dad)))
     
     half_heir1 = [x for x in half_heir1]
     half_heir2 = [x for x in half_heir2]
@@ -77,6 +77,14 @@ def crossover(mom, dad):
     return heir1, heir2    
 
 # do not pass fitness
-def cross_pop(parents, pop_size):
-    new_pop = parents
+def cross_pop(parents):
+    new_pop = []
     
+    moms = parents[:int(len(parents)/2)]
+    dads = parents[int(len(parents)/2):]
+    
+    for cross in zip(moms, dads):
+        new_pop += crossover(cross[0], cross[1])
+        
+    print(new_pop)
+    return new_pop
