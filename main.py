@@ -1,3 +1,5 @@
+#!/usr/bin/env python3.7
+
 import population
 import reader
 import selection
@@ -24,5 +26,9 @@ for i in range(gens):
     
     population.mutate(parents, 0.2)
     pop = population.cross_pop(parents)
+
+# Printing the best bag
+output_file = open("output.txt", "w")
+population.calculate_fitness(alpha[1], dataset, volume, export_func=lambda x: print(x, file=output_file))
 
 print('golden individual:', alpha)

@@ -9,7 +9,7 @@ def gen_population(item_count, pop_size=20):
         pop.append(random.sample(range(item_count), item_count))
     return pop
 
-def calculate_fitness(gene, dataset, cap):
+def calculate_fitness(gene, dataset, cap, export_func=None):
     fit = 0
     for item, _ in sorted(enumerate(gene), key=lambda tpl: tpl[1]):
         weight = int(dataset[item][1])
@@ -17,6 +17,9 @@ def calculate_fitness(gene, dataset, cap):
         if cap - weight >= 0:
             cap -= weight
             fit += imp
+            if (export_func): export_func(1)
+        else:
+            if (export_func): export_func(0)
     return fit
 
 def fitness(pop, dataset, cap):
