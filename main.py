@@ -6,7 +6,7 @@ import selection
 import sys
 import time
 
-def run(filename, seconds=300, mutation_rate=0.2, selector=selection.elite):
+def run(filename, seconds=10, mutation_rate=0.2, selector=selection.elite):
     dataset, volume = reader.read_dataset(filename)
     pop = population.gen_population(len(dataset), 4)
 
@@ -14,7 +14,7 @@ def run(filename, seconds=300, mutation_rate=0.2, selector=selection.elite):
     i = 0
     target_time = time.time() + seconds
     while time.time() < target_time:
-        parents, fitness = zip(*selection.elite(pop, population.fitness(pop, dataset, volume), items=2))
+        parents, fitness = zip(*selector(pop, population.fitness(pop, dataset, volume), items=2))
 
         max_fit = (max(fitness), parents[fitness.index(max(fitness))])
         
@@ -30,7 +30,7 @@ def run(filename, seconds=300, mutation_rate=0.2, selector=selection.elite):
 
     # Printing the best bag
     output_file = open("output.txt", "w")
-    population.calculate_fitness(alpha[1], dataset, volume, export_func=lambda x: print(x, file=output_file))
+    for i in population.bag(alpha[1], dataset, volume): print(i, file=output_file)
 
     print('golden individual:', alpha)
 
